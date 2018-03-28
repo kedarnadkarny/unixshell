@@ -3,14 +3,22 @@ import os
 import psutil
 import time
 
+builtins = ['cd','exit']
+
 def main():
 	while (True):
-		#time.sleep(5)
 		args = raw_input("> ").split(" ")
-		if "exit" in args:
-			break
+		if args[0] in builtins:
+			builtins_exe(args)
 		else:
 			create_proc(args)
+
+def builtins_exe(args):
+	if args[0]=='exit':
+		os._exit(0)
+	elif args[0]=='cd':
+		os.chdir(args[1])
+		
 
 def create_proc(args):
 	newpid = os.fork()
